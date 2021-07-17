@@ -34,11 +34,16 @@ class Redactor:
                 text = page.extract_text()
                 print(text)
                 print("\n\n")
-                print(scrubadub.clean(text, replace_with='identifier'))
-                print("\n\n\n")
-                print(page.extract_words())
+                text_without_pii = scrubadub.clean(text, replace_with='identifier')
+                words = page.extract_words()
+                img = page.to_image()
+                for word in words:
+                    if word['text'] not in text_without_pii:
+                        # `word` is PII
+                        img = img .draw_rect(word, fill='black', stroke='black')
                 # extract_words
                 # draw_rect
+                img.save('redacted', format="PNG")
 
 
 
