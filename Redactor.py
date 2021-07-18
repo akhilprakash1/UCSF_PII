@@ -1,36 +1,17 @@
 import re
 import pdfplumber
 import scrubadub
+from PyPDF2 import PdfFileMerger
 
 
 class Redactor:
     def __init__(self, path):
         self.path = path
 
-    # static methods work independent of class object
-    @staticmethod
-    def get_sensitive_data(lines):
-
-        """ Function to get all the lines """
-
-        # email regex
-        EMAIL_REG = r"([\w\.\d]+\@[\w\d]+\.[\w\d]+)"
-        for line in lines:
-
-            # matching the regex to each line
-            if re.search(EMAIL_REG, line, re.IGNORECASE):
-                search = re.search(EMAIL_REG, line, re.IGNORECASE)
-
-                # yields creates a generator
-                # generator is used to return
-                # values in between function iterations
-                yield search.group(1)
-
     def redaction(self):
-
         """ main redactor code """
         with pdfplumber.open(self.path) as pdf:
-            for page in pdf.pages:
+            for idx, page in enumerate(pdf.pages):
                 text = page.extract_text()
                 print(text)
                 print("\n\n")
@@ -41,14 +22,21 @@ class Redactor:
                     if word['text'] not in text_without_pii:
                         # `word` is PII
                         img = img .draw_rect(word, fill='black', stroke='black')
-                # extract_words
-                # draw_rect
-                img.save('redacted', format="PNG")
+                img.save('redacted_{}.pdf'.format(idx), format="PDF")
+        return len(pdf.pages)
 
+    def merge(self, num_pages):
+        pdf_merger = PdfFileMerger()
+        for i in range(num_pages):
+            pdf_merger.append('redacted_{}.pdf'.format(i))
+        output_path = self.path.split(".pdf")[0] + "_redacted.pdf"
+        with open(output_path, 'wb') as fileobj:
+            pdf_merger.write(fileobj)
 
 
 if __name__ == "__main__":
     # replace it with name of the pdf file
     path = 'example1.pdf'
     redactor = Redactor(path)
-    redactor.redaction()
+    num_pages = redactor.redaction()
+    redactor.merge(num_pages)
