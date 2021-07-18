@@ -1,7 +1,7 @@
 import unittest
 
 from diff_pdf_visually import pdfdiff
-from Redactor import Redactor
+from redactor import Redactor
 
 
 class Test(unittest.TestCase):

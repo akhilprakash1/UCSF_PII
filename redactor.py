@@ -43,7 +43,7 @@ if __name__ == "__main__":
                 [
                     "[USAGE]:",
                     "python",
-                    "Redactor.py",
+                    "redactor.py",
                     "<file_name>",
                 ]
             )
