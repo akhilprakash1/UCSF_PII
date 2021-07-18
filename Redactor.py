@@ -1,7 +1,10 @@
+#!/usr/bin/python
+
 import re
 import pdfplumber
 import scrubadub
 from PyPDF2 import PdfFileMerger
+import sys
 
 
 class Redactor:
@@ -9,12 +12,9 @@ class Redactor:
         self.path = path
 
     def redaction(self):
-        """ main redactor code """
         with pdfplumber.open(self.path) as pdf:
             for idx, page in enumerate(pdf.pages):
                 text = page.extract_text()
-                print(text)
-                print("\n\n")
                 text_without_pii = scrubadub.clean(text, replace_with='identifier')
                 words = page.extract_words()
                 img = page.to_image()
@@ -36,7 +36,20 @@ class Redactor:
 
 if __name__ == "__main__":
     # replace it with name of the pdf file
-    path = 'example1.pdf'
-    redactor = Redactor(path)
+    # path = 'example1.pdf'
+    if len(sys.argv) != 2:
+        print(
+            " ".join(
+                [
+                    "[USAGE]:",
+                    "python",
+                    "Redactor.py",
+                    "<file_name>",
+                ]
+            )
+        )
+        sys.exit(1)
+
+    redactor = Redactor(sys.argv[1])
     num_pages = redactor.redaction()
     redactor.merge(num_pages)
