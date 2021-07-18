@@ -1,0 +1,4 @@
+- name: Python style check
+  # You may pin to the exact commit or the version.
+  # uses: bulv1ne/python-style-check@053ac31b291ccaf489f1b9beb4c940f096dbb399
+  uses: bulv1ne/python-style-check@v0.3
