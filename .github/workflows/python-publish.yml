@@ -1,7 +1,14 @@
-- name: Python Unit Test
+name: Python Unit Test
+  on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
   # You may pin to the exact commit or the version.
   # uses: onichandame/python-test-action@6a1d618300de7ea0b753e50819e093a7e5a5f60b
-  uses: onichandame/python-test-action@0.0.0
+  uses: onichandame/python-test-action
   with:
     # dependency list
     deps_list: # default is requirements.txt
