@@ -2,5 +2,4 @@ pdfplumber
 scrubadub
 PyPDF2
 nltk
-unittest
 diff_pdf_visually
