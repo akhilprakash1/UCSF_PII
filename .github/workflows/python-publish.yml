@@ -1,5 +1,5 @@
 name: Python Unit Test
-  on:
+on:
   push:
     branches:
       - main
