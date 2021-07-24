@@ -10,7 +10,7 @@ It is hard to write a correct unit test because I am just calling other library 
 
 To run things locally, you can `pip install --no-cache-dir -r requirements.txt` and then run `python3 redactor.py example1.pdf`.
 
-To run things with docker, `docker build .`. Run `docker image ls` and find the image id of the recently created image. The repository and tag should be "<none>". `docker tag <imageId> redactor`. `docker run redactor`.
+To run things with docker, `docker build .`. Run `docker image ls` and find the image id of the recently created image. The repository and tag should be `<none>`. `docker tag <imageId> redactor`. `docker run redactor`.
 
 Follow these commands to copy the output from the docker container (example1_redacted.pdf and example2_redacted.pdf) to the Downloads folder on the local file system.
 
