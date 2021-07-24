@@ -16,7 +16,6 @@ Follow these commands to copy the output from the docker container (example1_red
 
 ```
 docker create -ti --name dummy redactor bash
-docker cp dummy:* /Downloads/test_copy/
 docker cp dummy:example1_redacted.pdf ~/Downloads/
 docker cp dummy:example2_redacted.pdf ~/Downloads/
 ```
